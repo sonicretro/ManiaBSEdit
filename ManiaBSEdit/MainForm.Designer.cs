@@ -93,6 +93,7 @@
 			this.replaceFGToBGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.replaceBGToFGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.swapFGAndBGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.markBlueGreenRedSpheresAsRingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.flipHorizontallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.flipVerticallyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.rotateLeftToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +101,6 @@
 			this.saveSectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pasteSectionOnceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pasteSectionRepeatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.markBlueRedSpheresAsRingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			menuStrip1 = new System.Windows.Forms.MenuStrip();
 			imageList1 = new System.Windows.Forms.ImageList(this.components);
 			panel1 = new System.Windows.Forms.Panel();
@@ -704,12 +704,12 @@
 			// toolStripSeparator1
 			// 
 			toolStripSeparator1.Name = "toolStripSeparator1";
-			toolStripSeparator1.Size = new System.Drawing.Size(241, 6);
+			toolStripSeparator1.Size = new System.Drawing.Size(277, 6);
 			// 
 			// toolStripSeparator2
 			// 
 			toolStripSeparator2.Name = "toolStripSeparator2";
-			toolStripSeparator2.Size = new System.Drawing.Size(241, 6);
+			toolStripSeparator2.Size = new System.Drawing.Size(277, 6);
 			toolStripSeparator2.Visible = false;
 			// 
 			// panel2
@@ -750,7 +750,7 @@
             this.importToolStripMenuItem,
             this.insertTextToolStripMenuItem,
             this.replaceToolStripMenuItem,
-            this.markBlueRedSpheresAsRingsToolStripMenuItem,
+            this.markBlueGreenRedSpheresAsRingsToolStripMenuItem,
             toolStripSeparator1,
             this.flipHorizontallyToolStripMenuItem,
             this.flipVerticallyToolStripMenuItem,
@@ -761,13 +761,13 @@
             this.pasteSectionOnceToolStripMenuItem,
             this.pasteSectionRepeatingToolStripMenuItem});
 			this.layoutContextMenuStrip.Name = "layoutContextMenuStrip";
-			this.layoutContextMenuStrip.Size = new System.Drawing.Size(245, 368);
+			this.layoutContextMenuStrip.Size = new System.Drawing.Size(281, 368);
 			// 
 			// cutToolStripMenuItem
 			// 
 			this.cutToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.cut;
 			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-			this.cutToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.cutToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.cutToolStripMenuItem.Text = "Cu&t";
 			this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
 			// 
@@ -775,7 +775,7 @@
 			// 
 			this.copyToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.copy;
 			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-			this.copyToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.copyToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.copyToolStripMenuItem.Text = "&Copy";
 			this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
 			// 
@@ -783,7 +783,7 @@
 			// 
 			this.pasteOnceToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.paste;
 			this.pasteOnceToolStripMenuItem.Name = "pasteOnceToolStripMenuItem";
-			this.pasteOnceToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.pasteOnceToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.pasteOnceToolStripMenuItem.Text = "&Paste Once";
 			this.pasteOnceToolStripMenuItem.Click += new System.EventHandler(this.pasteOnceToolStripMenuItem_Click);
 			// 
@@ -791,14 +791,14 @@
 			// 
 			this.pasteRepeatingToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.paste;
 			this.pasteRepeatingToolStripMenuItem.Name = "pasteRepeatingToolStripMenuItem";
-			this.pasteRepeatingToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.pasteRepeatingToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.pasteRepeatingToolStripMenuItem.Text = "Paste &Repeating";
 			this.pasteRepeatingToolStripMenuItem.Click += new System.EventHandler(this.pasteRepeatingToolStripMenuItem_Click);
 			// 
 			// importToolStripMenuItem
 			// 
 			this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-			this.importToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.importToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.importToolStripMenuItem.Text = "I&mport...";
 			this.importToolStripMenuItem.Visible = false;
 			this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
@@ -807,7 +807,7 @@
 			// 
 			this.insertTextToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.FontHS;
 			this.insertTextToolStripMenuItem.Name = "insertTextToolStripMenuItem";
-			this.insertTextToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.insertTextToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.insertTextToolStripMenuItem.Text = "Insert Te&xt...";
 			this.insertTextToolStripMenuItem.Click += new System.EventHandler(this.insertTextToolStripMenuItem_Click);
 			// 
@@ -818,7 +818,7 @@
             this.replaceBGToFGToolStripMenuItem,
             this.swapFGAndBGToolStripMenuItem});
 			this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
-			this.replaceToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.replaceToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.replaceToolStripMenuItem.Text = "Repl&ace...";
 			// 
 			// replaceFGToBGToolStripMenuItem
@@ -842,11 +842,18 @@
 			this.swapFGAndBGToolStripMenuItem.Text = "F&G <-> BG";
 			this.swapFGAndBGToolStripMenuItem.Click += new System.EventHandler(this.swapFGAndBGToolStripMenuItem_Click);
 			// 
+			// markBlueGreenRedSpheresAsRingsToolStripMenuItem
+			// 
+			this.markBlueGreenRedSpheresAsRingsToolStripMenuItem.Name = "markBlueGreenRedSpheresAsRingsToolStripMenuItem";
+			this.markBlueGreenRedSpheresAsRingsToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
+			this.markBlueGreenRedSpheresAsRingsToolStripMenuItem.Text = "Mark &Blue/Green/Red Spheres As Rings";
+			this.markBlueGreenRedSpheresAsRingsToolStripMenuItem.Click += new System.EventHandler(this.markBlueGreenRedSpheresAsRingsToolStripMenuItem_Click);
+			// 
 			// flipHorizontallyToolStripMenuItem
 			// 
 			this.flipHorizontallyToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.fliph;
 			this.flipHorizontallyToolStripMenuItem.Name = "flipHorizontallyToolStripMenuItem";
-			this.flipHorizontallyToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.flipHorizontallyToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.flipHorizontallyToolStripMenuItem.Text = "Flip &Horizontally";
 			this.flipHorizontallyToolStripMenuItem.Click += new System.EventHandler(this.flipHorizontallyToolStripMenuItem_Click);
 			// 
@@ -854,7 +861,7 @@
 			// 
 			this.flipVerticallyToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.flipv;
 			this.flipVerticallyToolStripMenuItem.Name = "flipVerticallyToolStripMenuItem";
-			this.flipVerticallyToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.flipVerticallyToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.flipVerticallyToolStripMenuItem.Text = "Flip &Vertically";
 			this.flipVerticallyToolStripMenuItem.Click += new System.EventHandler(this.flipVerticallyToolStripMenuItem_Click);
 			// 
@@ -862,7 +869,7 @@
 			// 
 			this.rotateLeftToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.rotatel;
 			this.rotateLeftToolStripMenuItem.Name = "rotateLeftToolStripMenuItem";
-			this.rotateLeftToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.rotateLeftToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.rotateLeftToolStripMenuItem.Text = "Rotate &Left";
 			this.rotateLeftToolStripMenuItem.Click += new System.EventHandler(this.rotateLeftToolStripMenuItem_Click);
 			// 
@@ -870,14 +877,14 @@
 			// 
 			this.rotateRightToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.rotater;
 			this.rotateRightToolStripMenuItem.Name = "rotateRightToolStripMenuItem";
-			this.rotateRightToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.rotateRightToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.rotateRightToolStripMenuItem.Text = "Rotate R&ight";
 			this.rotateRightToolStripMenuItem.Click += new System.EventHandler(this.rotateRightToolStripMenuItem_Click);
 			// 
 			// saveSectionToolStripMenuItem
 			// 
 			this.saveSectionToolStripMenuItem.Name = "saveSectionToolStripMenuItem";
-			this.saveSectionToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.saveSectionToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.saveSectionToolStripMenuItem.Text = "&Save Section...";
 			this.saveSectionToolStripMenuItem.Click += new System.EventHandler(this.saveSectionToolStripMenuItem_Click);
 			// 
@@ -885,7 +892,7 @@
 			// 
 			this.pasteSectionOnceToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.paste;
 			this.pasteSectionOnceToolStripMenuItem.Name = "pasteSectionOnceToolStripMenuItem";
-			this.pasteSectionOnceToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.pasteSectionOnceToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.pasteSectionOnceToolStripMenuItem.Text = "P&aste Section Once";
 			this.pasteSectionOnceToolStripMenuItem.Click += new System.EventHandler(this.pasteSectionOnceToolStripMenuItem_Click);
 			// 
@@ -893,16 +900,9 @@
 			// 
 			this.pasteSectionRepeatingToolStripMenuItem.Image = global::ManiaBSEdit.Properties.Resources.paste;
 			this.pasteSectionRepeatingToolStripMenuItem.Name = "pasteSectionRepeatingToolStripMenuItem";
-			this.pasteSectionRepeatingToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
+			this.pasteSectionRepeatingToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.pasteSectionRepeatingToolStripMenuItem.Text = "Paste Section R&epeating";
 			this.pasteSectionRepeatingToolStripMenuItem.Click += new System.EventHandler(this.pasteSectionRepeatingToolStripMenuItem_Click);
-			// 
-			// markBlueRedSpheresAsRingsToolStripMenuItem
-			// 
-			this.markBlueRedSpheresAsRingsToolStripMenuItem.Name = "markBlueRedSpheresAsRingsToolStripMenuItem";
-			this.markBlueRedSpheresAsRingsToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
-			this.markBlueRedSpheresAsRingsToolStripMenuItem.Text = "Mark &Blue/Red Spheres As Rings";
-			this.markBlueRedSpheresAsRingsToolStripMenuItem.Click += new System.EventHandler(this.markBlueRedSpheresAsRingsToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 
@@ -1018,7 +1018,7 @@
 		private System.Windows.Forms.PictureBox paletteGreen;
 		private System.Windows.Forms.PictureBox palettePink;
 		private System.Windows.Forms.PropertyGrid propertyGrid1;
-		private System.Windows.Forms.ToolStripMenuItem markBlueRedSpheresAsRingsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem markBlueGreenRedSpheresAsRingsToolStripMenuItem;
 	}
 }
 

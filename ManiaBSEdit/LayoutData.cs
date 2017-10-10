@@ -102,8 +102,7 @@ namespace ManiaBSEdit
 			SceneLayer rings = scene.Layers.Single(a => a.Name == "Ring Count\0");
 			for (int y = 0; y < Math.Min(rings.Height, Height); y++)
 				for (int x = 0; x < Math.Min(rings.Width, Width); x++)
-					if (Layout[x, y].HasFlag(SphereType.RingFlag))
-						rings.Tiles[y][x] = (ushort)SphereType.Ring;
+					rings.Tiles[y][x] = Layout[x, y].HasFlag(SphereType.RingFlag) ? (ushort)SphereType.Ring : (ushort)0;
 			if (HasPal)
 			{
 				SceneEntity palent = scene.Objects.Single(a => a.Name.Name == "BSS_Palette").Entities[0];

@@ -1501,7 +1501,7 @@ namespace ManiaBSEdit
 			}
 		}
 
-		private void markBlueRedSpheresAsRingsToolStripMenuItem_Click(object sender, EventArgs e)
+		private void markBlueGreenRedSpheresAsRingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Rectangle area = selection;
 			if (area.IsEmpty)
@@ -1512,7 +1512,7 @@ namespace ManiaBSEdit
 				for (int x = 0; x < area.Width; x++)
 				{
 					SphereType sp = layout.Layout[area.X + x, area.Y + y];
-					if (sp == SphereType.Blue || sp == SphereType.Red)
+					if (sp == SphereType.Blue || sp == SphereType.Red || sp == SphereType.Green)
 					{
 						sect[x, y] = sp | SphereType.RingFlag;
 						found = true;

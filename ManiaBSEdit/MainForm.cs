@@ -613,6 +613,10 @@ namespace ManiaBSEdit
 		{
 			Point gridloc = layoutPanel.PointToClient(Cursor.Position);
 			gridloc = new Point(gridloc.X / gridsize, gridloc.Y / gridsize);
+			int stX = -layoutPanelContainer.AutoScrollPosition.X;
+			int stY = -layoutPanelContainer.AutoScrollPosition.Y;
+			int width = Math.Min(layoutPanelContainer.Width, layoutPanel.Width);
+			int height = Math.Min(layoutPanelContainer.Height, layoutPanel.Height);
 			LayoutData tmplayout = layout.Clone();
 			if (drawing)
 				switch (tool)
@@ -667,7 +671,12 @@ namespace ManiaBSEdit
 						layout.StartY = (ushort)startloc.Y;
 						break;
 				}
-			BitmapBits layoutbmp = LayoutDrawer.DrawLayout(tmplayout, gridsize);
+			int l = stX / gridsize;
+			int t = stY / gridsize;
+			int r = Math.Min(l + (width + gridsize - 1) / gridsize, tmplayout.Width);
+			int b = Math.Min(t + (height + gridsize - 1) / gridsize, tmplayout.Height);
+			BitmapBits layoutbmp = LayoutDrawer.DrawLayout(tmplayout, gridsize,
+				Rectangle.FromLTRB(l, t, r, b));
 			using (Bitmap bmp = layoutbmp.ToBitmap(LayoutDrawer.Palette).To32bpp())
 			{
 				Graphics gfx = Graphics.FromImage(bmp);
@@ -675,7 +684,7 @@ namespace ManiaBSEdit
 				{
 					if (!selection.IsEmpty)
 					{
-						Rectangle selbnds = new Rectangle(selection.X * gridsize, selection.Y * gridsize, selection.Width * gridsize, selection.Height * gridsize);
+						Rectangle selbnds = new Rectangle((selection.X - l) * gridsize, (selection.Y - t) * gridsize, selection.Width * gridsize, selection.Height * gridsize);
 						using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, SystemColors.Highlight)))
 							gfx.FillRectangle(brush, selbnds);
 						selbnds.Width--; selbnds.Height--;
@@ -686,22 +695,22 @@ namespace ManiaBSEdit
 				else if (!drawing)
 				{
 					if (tool == Tool.Start)
-						gfx.DrawImage(startbmps32[layout.Angle], new Rectangle(gridloc.X * gridsize + 2, gridloc.Y * gridsize + 2, 24, 24), 0, 0, 24, 24, GraphicsUnit.Pixel, imageTransparency);
+						gfx.DrawImage(startbmps32[layout.Angle], new Rectangle((gridloc.X - l) * gridsize + 2, (gridloc.Y - t) * gridsize + 2, 24, 24), 0, 0, 24, 24, GraphicsUnit.Pixel, imageTransparency);
 					else
 					{
 						if (fgsphere != SphereType.Empty)
-							gfx.DrawImage(foreSpherePicture.Image, new Rectangle(gridloc.X * gridsize + 2, gridloc.Y * gridsize + 2, 24, 24), 0, 0, 24, 24, GraphicsUnit.Pixel, imageTransparency);
+							gfx.DrawImage(foreSpherePicture.Image, new Rectangle((gridloc.X - l) * gridsize + 2, (gridloc.Y - t) * gridsize + 2, 24, 24), 0, 0, 24, 24, GraphicsUnit.Pixel, imageTransparency);
 						if (fgsphere == SphereType.Yellow)
 							using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, Color.Yellow)))
 							{
-								gfx.FillRectangle(brush, gridloc.X * gridsize, layout.WrapV(gridloc.Y - 6) * gridsize, gridsize, gridsize);
-								gfx.FillRectangle(brush, layout.WrapH(gridloc.X + 6) * gridsize, gridloc.Y * gridsize, gridsize, gridsize);
-								gfx.FillRectangle(brush, gridloc.X * gridsize, layout.WrapV(gridloc.Y + 6) * gridsize, gridsize, gridsize);
-								gfx.FillRectangle(brush, layout.WrapH(gridloc.X - 6) * gridsize, gridloc.Y * gridsize, gridsize, gridsize);
+								gfx.FillRectangle(brush, (gridloc.X - l) * gridsize, (layout.WrapV(gridloc.Y - 6) - t) * gridsize, gridsize, gridsize);
+								gfx.FillRectangle(brush, (layout.WrapH(gridloc.X + 6) - l) * gridsize, (gridloc.Y - t) * gridsize, gridsize, gridsize);
+								gfx.FillRectangle(brush, (gridloc.X - l) * gridsize, (layout.WrapV(gridloc.Y + 6) - t) * gridsize, gridsize, gridsize);
+								gfx.FillRectangle(brush, (layout.WrapH(gridloc.X - 6) - l) * gridsize, (gridloc.Y - t) * gridsize, gridsize, gridsize);
 							}
 					}
 				}
-				layoutgfx.DrawImage(bmp, 0, 0, layoutPanel.Width, layoutPanel.Height);
+				layoutgfx.DrawImage(bmp, l * gridsize, t * gridsize, bmp.Width, bmp.Height);
 			}
 		}
 

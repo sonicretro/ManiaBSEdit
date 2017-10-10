@@ -35,7 +35,6 @@
 			System.Windows.Forms.Panel panel1;
 			System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 			System.Windows.Forms.ToolTip toolTip1;
-			System.Windows.Forms.Panel panel4;
 			System.Windows.Forms.Panel panel5;
 			System.Windows.Forms.ToolStrip layoutSectionListToolStrip;
 			System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -75,6 +74,7 @@
 			this.layoutSectionPreview = new System.Windows.Forms.PictureBox();
 			this.paletteGreen = new System.Windows.Forms.PictureBox();
 			this.palettePink = new System.Windows.Forms.PictureBox();
+			this.layoutPanelContainer = new System.Windows.Forms.Panel();
 			this.layoutPanel = new System.Windows.Forms.Panel();
 			this.layoutSectionSplitContainer = new System.Windows.Forms.SplitContainer();
 			this.importToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -106,7 +106,6 @@
 			panel1 = new System.Windows.Forms.Panel();
 			tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			panel4 = new System.Windows.Forms.Panel();
 			panel5 = new System.Windows.Forms.Panel();
 			layoutSectionListToolStrip = new System.Windows.Forms.ToolStrip();
 			toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -125,7 +124,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutSectionPreview)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.paletteGreen)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.palettePink)).BeginInit();
-			panel4.SuspendLayout();
+			this.layoutPanelContainer.SuspendLayout();
 			panel5.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.layoutSectionSplitContainer)).BeginInit();
 			this.layoutSectionSplitContainer.Panel1.SuspendLayout();
@@ -604,16 +603,16 @@
 			toolTip1.SetToolTip(this.palettePink, "Pink Sphere");
 			this.palettePink.MouseClick += new System.Windows.Forms.MouseEventHandler(this.palettePink_MouseClick);
 			// 
-			// panel4
+			// layoutPanelContainer
 			// 
-			panel4.AutoScroll = true;
-			panel4.BackColor = System.Drawing.SystemColors.ControlDark;
-			panel4.Controls.Add(this.layoutPanel);
-			panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			panel4.Location = new System.Drawing.Point(60, 62);
-			panel4.Name = "panel4";
-			panel4.Size = new System.Drawing.Size(324, 499);
-			panel4.TabIndex = 1;
+			this.layoutPanelContainer.AutoScroll = true;
+			this.layoutPanelContainer.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.layoutPanelContainer.Controls.Add(this.layoutPanel);
+			this.layoutPanelContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.layoutPanelContainer.Location = new System.Drawing.Point(60, 62);
+			this.layoutPanelContainer.Name = "layoutPanelContainer";
+			this.layoutPanelContainer.Size = new System.Drawing.Size(324, 499);
+			this.layoutPanelContainer.TabIndex = 1;
 			// 
 			// layoutPanel
 			// 
@@ -761,7 +760,7 @@
             this.pasteSectionOnceToolStripMenuItem,
             this.pasteSectionRepeatingToolStripMenuItem});
 			this.layoutContextMenuStrip.Name = "layoutContextMenuStrip";
-			this.layoutContextMenuStrip.Size = new System.Drawing.Size(281, 368);
+			this.layoutContextMenuStrip.Size = new System.Drawing.Size(281, 346);
 			// 
 			// cutToolStripMenuItem
 			// 
@@ -909,7 +908,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(584, 561);
-			this.Controls.Add(panel4);
+			this.Controls.Add(this.layoutPanelContainer);
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(panel1);
 			this.Controls.Add(panel5);
@@ -938,7 +937,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.layoutSectionPreview)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.paletteGreen)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.palettePink)).EndInit();
-			panel4.ResumeLayout(false);
+			this.layoutPanelContainer.ResumeLayout(false);
 			panel5.ResumeLayout(false);
 			this.layoutSectionSplitContainer.Panel1.ResumeLayout(false);
 			this.layoutSectionSplitContainer.Panel1.PerformLayout();
@@ -1019,6 +1018,7 @@
 		private System.Windows.Forms.PictureBox palettePink;
 		private System.Windows.Forms.PropertyGrid propertyGrid1;
 		private System.Windows.Forms.ToolStripMenuItem markBlueGreenRedSpheresAsRingsToolStripMenuItem;
+		private System.Windows.Forms.Panel layoutPanelContainer;
 	}
 }
 

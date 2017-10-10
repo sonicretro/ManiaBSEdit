@@ -59,15 +59,17 @@ namespace ManiaBSEdit
 			}
 		}
 
-		public static BitmapBits DrawLayout(SphereType[,] layout, int gridsize)
+		public static BitmapBits DrawLayout(SphereType[,] layout, int gridsize, Rectangle? bounds = null)
 		{
-			int width = layout.GetLength(0);
-			int height = layout.GetLength(1);
+			int stX = bounds?.X ?? 0;
+			int stY = bounds?.Y ?? 0;
+			int width = bounds?.Width ?? layout.GetLength(0);
+			int height = bounds?.Height ?? layout.GetLength(1);
 			int off = (gridsize - 24) / 2;
 			BitmapBits layoutbmp = new BitmapBits(width * gridsize, height * gridsize);
 			for (int y = -gridsize / 2; y < layoutbmp.Height; y += gridsize * 2)
 			{
-				bool row = false;
+				bool row = ((stX & 1) == 1) ^ ((stY & 1) == 1);
 				for (int x = -gridsize / 2; x < layoutbmp.Width; x += gridsize)
 				{
 					layoutbmp.FillRectangle(1, x, row ? y : y + gridsize, gridsize, gridsize);
@@ -77,8 +79,8 @@ namespace ManiaBSEdit
 			for (int y = 0; y < height; y++)
 				for (int x = 0; x < width; x++)
 				{
-					SphereType sp = layout[x, y];
-					if (sp != SphereType.Empty)
+					SphereType sp = layout[x + stX, y + stY];
+					if ((sp & ~SphereType.RingFlag) != SphereType.Empty)
 						layoutbmp.DrawBitmapComposited(SphereBmps[sp], x * gridsize + off, y * gridsize + off);
 				}
 			return layoutbmp;
@@ -97,17 +99,17 @@ namespace ManiaBSEdit
 				for (int x = 0; x < width; x++)
 				{
 					SphereType? sp = layout[x, y];
-					if (sp.HasValue && sp.Value != SphereType.Empty)
+					if (sp.HasValue && (sp.Value & ~SphereType.RingFlag) != SphereType.Empty)
 						layoutbmp.DrawBitmapComposited(SphereBmps[sp.Value], x * gridsize + off, y * gridsize + off);
 				}
 			return layoutbmp;
 		}
 
-		public static BitmapBits DrawLayout(LayoutData layout, int gridsize)
+		public static BitmapBits DrawLayout(LayoutData layout, int gridsize, Rectangle? bounds = null)
 		{
-			BitmapBits layoutbmp = DrawLayout(layout.Layout, gridsize);
+			BitmapBits layoutbmp = DrawLayout(layout.Layout, gridsize, bounds);
 			int off = (gridsize - 24) / 2;
-			layoutbmp.DrawBitmapComposited(StartBmps[layout.Angle], layout.StartX * gridsize + off, layout.StartY * gridsize + off);
+			layoutbmp.DrawBitmapComposited(StartBmps[layout.Angle], (layout.StartX - bounds?.X ?? 0) * gridsize + off, (layout.StartY - bounds?.Y ?? 0) * gridsize + off);
 			return layoutbmp;
 		}
 	}

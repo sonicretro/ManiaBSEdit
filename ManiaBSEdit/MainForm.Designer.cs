@@ -75,7 +75,7 @@
 			this.layoutSectionPreview = new System.Windows.Forms.PictureBox();
 			this.paletteGreen = new System.Windows.Forms.PictureBox();
 			this.palettePink = new System.Windows.Forms.PictureBox();
-			this.layoutPanel = new System.Windows.Forms.UserControl();
+			this.layoutPanel = new System.Windows.Forms.Panel();
 			this.layoutSectionSplitContainer = new System.Windows.Forms.SplitContainer();
 			this.importToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.stageLayoutOptionsPanel = new System.Windows.Forms.Panel();
@@ -978,7 +978,7 @@
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		private System.Windows.Forms.UserControl layoutPanel;
+		private System.Windows.Forms.Panel layoutPanel;
 		private System.Windows.Forms.PictureBox backSpherePicture;
 		private System.Windows.Forms.PictureBox foreSpherePicture;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;

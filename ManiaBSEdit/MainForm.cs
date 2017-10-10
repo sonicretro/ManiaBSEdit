@@ -88,14 +88,14 @@ namespace ManiaBSEdit
 				recentFilesToolStripMenuItem.Enabled = mru.Count > 0;
 			}
 			saveUndoHistoryToolStripMenuItem.Checked = settings.SaveUndoHistory;
+			layoutgfx = layoutPanel.CreateGraphics();
+			layoutgfx.SetOptions();
 			showGridToolStripMenuItem.Checked = settings.ShowGrid;
 			if (showGridToolStripMenuItem.Checked)
 			{
 				LayoutDrawer.Palette.Entries[0] = layout.PlayfieldA;
 				LayoutDrawer.Palette.Entries[1] = layout.PlayfieldB;
 			}
-			layoutgfx = layoutPanel.CreateGraphics();
-			layoutgfx.SetOptions();
 			LayoutPropertyProxy.PaletteID_Changed += LayoutPropertyProxy_PaletteID_Changed;
 			LayoutPropertyProxy.SkyAlpha_Changed += LayoutPropertyProxy_SkyAlpha_Changed;
 			LayoutPropertyProxy.GlobeAlpha_Changed += LayoutPropertyProxy_GlobeAlpha_Changed;

@@ -662,7 +662,7 @@ namespace ManiaBSEdit
 			GL.Vertex2(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height);
 			GL.Vertex2(rectangle.X, rectangle.Y + rectangle.Height);
 			GL.End();
-			GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);    // Don't tint the sprites
+			GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 
 		private static void DrawLayoutGL(LayoutData layout, int gridsize, Rectangle bounds)
@@ -672,7 +672,7 @@ namespace ManiaBSEdit
 			int width = stX + bounds.Width;
 			int height = stY + bounds.Height;
 			int off = (gridsize - 24) / 2;
-			// Draw grid
+			// Draw grid (inlined DrawRectangle)
 			GL.BindTexture(TextureTarget.Texture2D, 0);
 			GL.Color3(LayoutDrawer.Palette.Entries[1].R, LayoutDrawer.Palette.Entries[1].G, LayoutDrawer.Palette.Entries[1].B);
 			GL.Begin(PrimitiveType.Quads);
@@ -690,8 +690,8 @@ namespace ManiaBSEdit
 				}
 			}
 			GL.End();
-			GL.Color3(1.0f, 1.0f, 1.0f);    // Don't tint the sprites
-											// Draw objects
+			GL.Color3(1.0f, 1.0f, 1.0f);
+			// Draw objects
 			for (int y = stY; y < height; ++y)
 			{
 				for (int x = stX; x < width; ++x)

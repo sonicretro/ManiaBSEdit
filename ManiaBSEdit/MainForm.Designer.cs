@@ -140,9 +140,9 @@
 			// menuStrip1
 			// 
 			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.viewToolStripMenuItem});
+			this.fileToolStripMenuItem,
+			this.editToolStripMenuItem,
+			this.viewToolStripMenuItem});
 			menuStrip1.Location = new System.Drawing.Point(0, 0);
 			menuStrip1.Name = "menuStrip1";
 			menuStrip1.Size = new System.Drawing.Size(584, 24);
@@ -152,13 +152,13 @@
 			// fileToolStripMenuItem
 			// 
 			this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.openToolStripMenuItem,
-            this.saveToolStripMenuItem,
-            this.saveAsToolStripMenuItem,
-            this.exportImageToolStripMenuItem,
-            this.recentFilesToolStripMenuItem,
-            this.exitToolStripMenuItem});
+			this.newToolStripMenuItem,
+			this.openToolStripMenuItem,
+			this.saveToolStripMenuItem,
+			this.saveAsToolStripMenuItem,
+			this.exportImageToolStripMenuItem,
+			this.recentFilesToolStripMenuItem,
+			this.exitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			this.fileToolStripMenuItem.Text = "&File";
@@ -220,9 +220,9 @@
 			// editToolStripMenuItem
 			// 
 			this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.undoToolStripMenuItem,
-            this.redoToolStripMenuItem,
-            this.saveUndoHistoryToolStripMenuItem});
+			this.undoToolStripMenuItem,
+			this.redoToolStripMenuItem,
+			this.saveUndoHistoryToolStripMenuItem});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
 			this.editToolStripMenuItem.Text = "&Edit";
@@ -257,7 +257,7 @@
 			// viewToolStripMenuItem
 			// 
 			this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showGridToolStripMenuItem});
+			this.showGridToolStripMenuItem});
 			this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
 			this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
 			this.viewToolStripMenuItem.Text = "&View";
@@ -662,7 +662,7 @@
 			// 
 			layoutSectionListToolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
 			layoutSectionListToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importToolStripButton});
+			this.importToolStripButton});
 			layoutSectionListToolStrip.Location = new System.Drawing.Point(0, 0);
 			layoutSectionListToolStrip.Name = "layoutSectionListToolStrip";
 			layoutSectionListToolStrip.Size = new System.Drawing.Size(175, 25);
@@ -742,23 +742,23 @@
 			// layoutContextMenuStrip
 			// 
 			this.layoutContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.cutToolStripMenuItem,
-            this.copyToolStripMenuItem,
-            this.pasteOnceToolStripMenuItem,
-            this.pasteRepeatingToolStripMenuItem,
-            this.importToolStripMenuItem,
-            this.insertTextToolStripMenuItem,
-            this.replaceToolStripMenuItem,
-            this.markBlueGreenRedSpheresAsRingsToolStripMenuItem,
-            toolStripSeparator1,
-            this.flipHorizontallyToolStripMenuItem,
-            this.flipVerticallyToolStripMenuItem,
-            this.rotateLeftToolStripMenuItem,
-            this.rotateRightToolStripMenuItem,
-            toolStripSeparator2,
-            this.saveSectionToolStripMenuItem,
-            this.pasteSectionOnceToolStripMenuItem,
-            this.pasteSectionRepeatingToolStripMenuItem});
+			this.cutToolStripMenuItem,
+			this.copyToolStripMenuItem,
+			this.pasteOnceToolStripMenuItem,
+			this.pasteRepeatingToolStripMenuItem,
+			this.importToolStripMenuItem,
+			this.insertTextToolStripMenuItem,
+			this.replaceToolStripMenuItem,
+			this.markBlueGreenRedSpheresAsRingsToolStripMenuItem,
+			toolStripSeparator1,
+			this.flipHorizontallyToolStripMenuItem,
+			this.flipVerticallyToolStripMenuItem,
+			this.rotateLeftToolStripMenuItem,
+			this.rotateRightToolStripMenuItem,
+			toolStripSeparator2,
+			this.saveSectionToolStripMenuItem,
+			this.pasteSectionOnceToolStripMenuItem,
+			this.pasteSectionRepeatingToolStripMenuItem});
 			this.layoutContextMenuStrip.Name = "layoutContextMenuStrip";
 			this.layoutContextMenuStrip.Size = new System.Drawing.Size(281, 346);
 			// 
@@ -813,9 +813,9 @@
 			// replaceToolStripMenuItem
 			// 
 			this.replaceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.replaceFGToBGToolStripMenuItem,
-            this.replaceBGToFGToolStripMenuItem,
-            this.swapFGAndBGToolStripMenuItem});
+			this.replaceFGToBGToolStripMenuItem,
+			this.replaceBGToFGToolStripMenuItem,
+			this.swapFGAndBGToolStripMenuItem});
 			this.replaceToolStripMenuItem.Name = "replaceToolStripMenuItem";
 			this.replaceToolStripMenuItem.Size = new System.Drawing.Size(280, 22);
 			this.replaceToolStripMenuItem.Text = "Repl&ace...";

@@ -397,7 +397,7 @@ namespace ManiaBSEdit
 			}
 		}
 
-#region Sphere Palette
+		#region Sphere Palette
 		// Also handles backSpherePicture.Click
 		private void foreSpherePicture_Click(object sender, EventArgs e)
 		{
@@ -470,7 +470,7 @@ namespace ManiaBSEdit
 		}
 		#endregion
 
-#region Tool Palette
+		#region Tool Palette
 		private void selectButton_CheckedChanged(object sender, EventArgs e)
 		{
 			if (selectButton.Checked)
@@ -602,7 +602,7 @@ namespace ManiaBSEdit
 			}
 			toolOptionsPanel.Invalidate();
 		}
-#endregion
+		#endregion
 
 		private void layoutPanel_Paint(object sender, PaintEventArgs e)
 		{

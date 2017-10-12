@@ -30,7 +30,6 @@ namespace ManiaBSEdit
 		string filename = null;
 		SphereType fgsphere = SphereType.Blue;
 		SphereType bgsphere = SphereType.Empty;
-		ImageAttributes imageTransparency = new ImageAttributes();
 		Tool tool = Tool.Pencil;
 		ShapeMode rectmode = ShapeMode.Edge;
 		ShapeMode diammode = ShapeMode.Edge;
@@ -51,7 +50,6 @@ namespace ManiaBSEdit
 			using (FileStream fs = File.OpenRead("objects_attributes.ini"))
 				RSDKv5.Objects.InitObjects(fs);
 			layout = new LayoutData();
-			imageTransparency.SetColorMatrix(new ColorMatrix() { Matrix33 = 0.75f }, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 			LayoutDrawer.Init();
 			for (int i = 0; i < LayoutDrawer.StartBmps.Length; i++)
 				startbmps32[i] = LayoutDrawer.StartBmps[i].ToBitmap(LayoutDrawer.Palette).To32bpp();
@@ -817,13 +815,17 @@ namespace ManiaBSEdit
 			{
 				if (tool == Tool.Start)
 				{
+					GL.Color4(1.0f, 1.0f, 1.0f, 0.75f);	// Make sprite transparent
 					DrawSprite(StartTexIDs[layout.Angle], gridloc.X * gridsize + 2, gridloc.Y * gridsize + 2, 24, 24);
+					GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
 				}
 				else
 				{
 					if (fgsphere != SphereType.Empty)
 					{
+						GL.Color4(1.0f, 1.0f, 1.0f, 0.75f); // Make sprite transparent
 						DrawSprite(SphereTexIDs[fgsphere], gridloc.X * gridsize + 2, gridloc.Y * gridsize + 2, 24, 24);
+						GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
 					}
 					if (fgsphere == SphereType.Yellow)
 					{

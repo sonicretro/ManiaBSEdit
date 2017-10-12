@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using System.Linq;
+using OpenTK.Graphics.OpenGL;
 
 namespace ManiaBSEdit
 {
@@ -29,7 +30,6 @@ namespace ManiaBSEdit
 		string filename = null;
 		SphereType fgsphere = SphereType.Blue;
 		SphereType bgsphere = SphereType.Empty;
-		Graphics layoutgfx;
 		ImageAttributes imageTransparency = new ImageAttributes();
 		Tool tool = Tool.Pencil;
 		ShapeMode rectmode = ShapeMode.Edge;
@@ -55,6 +55,7 @@ namespace ManiaBSEdit
 			LayoutDrawer.Init();
 			for (int i = 0; i < LayoutDrawer.StartBmps.Length; i++)
 				startbmps32[i] = LayoutDrawer.StartBmps[i].ToBitmap(LayoutDrawer.Palette).To32bpp();
+			LoadOpenGLTextures();
 			foreSpherePicture.Image = paletteBlue.Image = LayoutDrawer.SphereBmps[SphereType.Blue].ToBitmap(LayoutDrawer.Palette).To32bpp();
 			paletteRed.Image = LayoutDrawer.SphereBmps[SphereType.Red].ToBitmap(LayoutDrawer.Palette).To32bpp();
 			paletteBumper.Image = LayoutDrawer.SphereBmps[SphereType.Bumper].ToBitmap(LayoutDrawer.Palette).To32bpp();
@@ -88,8 +89,6 @@ namespace ManiaBSEdit
 				recentFilesToolStripMenuItem.Enabled = mru.Count > 0;
 			}
 			saveUndoHistoryToolStripMenuItem.Checked = settings.SaveUndoHistory;
-			layoutgfx = layoutPanel.CreateGraphics();
-			layoutgfx.SetOptions();
 			showGridToolStripMenuItem.Checked = settings.ShowGrid;
 			if (showGridToolStripMenuItem.Checked)
 			{
@@ -217,8 +216,6 @@ namespace ManiaBSEdit
 			}
 			layoutPanel.Width = layout.Width * gridsize;
 			layoutPanel.Height = layout.Height * gridsize;
-			layoutgfx = layoutPanel.CreateGraphics();
-			layoutgfx.SetOptions();
 			lastSaveUndoCount = 0;
 			undoList.Clear();
 			redoList.Clear();
@@ -604,6 +601,122 @@ namespace ManiaBSEdit
 		}
 		#endregion
 
+		private static Dictionary<SphereType, int> SphereTexIDs = new Dictionary<SphereType, int>(5);
+		private static int[] StartTexIDs = new int[4];
+
+		private static void LoadOpenGLTextures()
+		{
+			// Generate OpenGL textures from SphereBmps
+			foreach (KeyValuePair<SphereType, BitmapBits> entry in LayoutDrawer.SphereBmps)
+			{
+				Bitmap bitmap = entry.Value.ToBitmap(LayoutDrawer.Palette);
+				BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+				int texture_id;
+				GL.GenTextures(1, out texture_id);
+				SphereTexIDs[entry.Key] = texture_id;
+				GL.BindTexture(TextureTarget.Texture2D, texture_id);
+				GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmap_data.Scan0);
+				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+			}
+			// Generate OpenGL textures from StartBmps
+			for (int i = 0; i < LayoutDrawer.StartBmps.Length; ++i)
+			{
+				Bitmap bitmap = LayoutDrawer.StartBmps[i].ToBitmap(LayoutDrawer.Palette);
+				BitmapData bitmap_data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+				int texture_id;
+				GL.GenTextures(1, out texture_id);
+				StartTexIDs[i] = texture_id;
+				GL.BindTexture(TextureTarget.Texture2D, texture_id);
+				GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmap_data.Scan0);
+				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+				GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+			}
+		}
+
+		private static void DrawSprite(int texture_id, int x, int y, int width, int height)
+		{
+			GL.BindTexture(TextureTarget.Texture2D, texture_id);
+
+			GL.Begin(PrimitiveType.Quads);
+			GL.TexCoord2(0.0f, 0.0f);
+			GL.Vertex2(x, y);
+			GL.TexCoord2(1.0f, 0.0f);
+			GL.Vertex2(x + width, y);
+			GL.TexCoord2(1.0f, 1.0f);
+			GL.Vertex2(x + width, y + height);
+			GL.TexCoord2(0.0f, 1.0f);
+			GL.Vertex2(x, y + height);
+			GL.End();
+		}
+
+		private static void DrawRectangle(Color color, Rectangle rectangle)
+		{
+			GL.Color4(color.R, color.G, color.B, color.A);
+			GL.BindTexture(TextureTarget.Texture2D, 0);
+			GL.Begin(PrimitiveType.Quads);
+			GL.Vertex2(rectangle.X, rectangle.Y);
+			GL.Vertex2(rectangle.X + rectangle.Width, rectangle.Y);
+			GL.Vertex2(rectangle.X + rectangle.Width, rectangle.Y + rectangle.Height);
+			GL.Vertex2(rectangle.X, rectangle.Y + rectangle.Height);
+			GL.End();
+			GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);    // Don't tint the sprites
+		}
+
+		private static void DrawLayoutGL(LayoutData layout, int gridsize, Rectangle bounds)
+		{
+			int stX = bounds.X;
+			int stY = bounds.Y;
+			int width = stX + bounds.Width;
+			int height = stY + bounds.Height;
+			int off = (gridsize - 24) / 2;
+			// Draw grid
+			GL.BindTexture(TextureTarget.Texture2D, 0);
+			GL.Color3(LayoutDrawer.Palette.Entries[1].R, LayoutDrawer.Palette.Entries[1].G, LayoutDrawer.Palette.Entries[1].B);
+			GL.Begin(PrimitiveType.Quads);
+			for (int y = (-gridsize / 2) + (stY * gridsize); y < height * gridsize; y += gridsize * 2)
+			{
+				bool row = ((stX & 1) == 1) ^ ((stY & 1) == 1);
+				for (int x = (-gridsize / 2) + (stX * gridsize); x < width * gridsize; x += gridsize)
+				{
+					int y_now = row ? y : y + gridsize;
+					GL.Vertex2(x, y_now);
+					GL.Vertex2(x + gridsize, y_now);
+					GL.Vertex2(x + gridsize, y_now + gridsize);
+					GL.Vertex2(x, y_now + gridsize);
+					row = !row;
+				}
+			}
+			GL.End();
+			GL.Color3(1.0f, 1.0f, 1.0f);    // Don't tint the sprites
+											// Draw objects
+			for (int y = stY; y < height; ++y)
+			{
+				for (int x = stX; x < width; ++x)
+				{
+					SphereType sp = layout.Layout[x, y];
+					if ((sp & ~SphereType.RingFlag) != SphereType.Empty)
+					{
+						DrawSprite(SphereTexIDs[sp], x * gridsize + off, y * gridsize + off, LayoutDrawer.SphereBmps[sp].Width, LayoutDrawer.SphereBmps[sp].Height);
+					}
+				}
+			}
+
+			DrawSprite(StartTexIDs[layout.Angle], (layout.StartX - 0) * gridsize + off, (layout.StartY - 0) * gridsize + off, LayoutDrawer.StartBmps[layout.Angle].Width, LayoutDrawer.StartBmps[layout.Angle].Height);
+		}
+
+		private void layoutPanel_Load(object sender, EventArgs e)
+		{
+			// Setup OpenGL
+			GL.MatrixMode(MatrixMode.Projection);
+			GL.Enable(EnableCap.Texture2D);     // Enable textures
+			GL.Enable(EnableCap.LineStipple);   // Enabled the doted-line effect
+			GL.Enable(EnableCap.Blend);			// Enable transparency
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);	// Ditto
+		}
+
 		private void layoutPanel_Paint(object sender, PaintEventArgs e)
 		{
 			DrawLayout();
@@ -611,6 +724,14 @@ namespace ManiaBSEdit
 
 		private void DrawLayout()
 		{
+			// Clear display
+			GL.ClearColor(LayoutDrawer.Palette.Entries[0].R / 255.0f, LayoutDrawer.Palette.Entries[0].G / 255.0f, LayoutDrawer.Palette.Entries[0].B / 255.0f, 1.0f);
+			GL.Clear(ClearBufferMask.ColorBufferBit);
+			// Keep up to date with panel size
+			GL.Viewport(0, 0, layoutPanel.Width, layoutPanel.Height);
+			GL.LoadIdentity();
+			GL.Ortho(0.0, layoutPanel.Width, layoutPanel.Height, 0.0, 1.0, -1.0);
+
 			Point gridloc = layoutPanel.PointToClient(Cursor.Position);
 			gridloc = new Point(gridloc.X / gridsize, gridloc.Y / gridsize);
 			int stX = -layoutPanelContainer.AutoScrollPosition.X;
@@ -675,43 +796,46 @@ namespace ManiaBSEdit
 			int t = stY / gridsize;
 			int r = Math.Min(l + (width + gridsize - 1) / gridsize, tmplayout.Width);
 			int b = Math.Min(t + (height + gridsize - 1) / gridsize, tmplayout.Height);
-			BitmapBits layoutbmp = LayoutDrawer.DrawLayout(tmplayout, gridsize,
-				Rectangle.FromLTRB(l, t, r, b));
-			using (Bitmap bmp = layoutbmp.ToBitmap(LayoutDrawer.Palette).To32bpp())
+			DrawLayoutGL(tmplayout, gridsize, Rectangle.FromLTRB(l, t, r, b));
+			if (tool == Tool.Select)
 			{
-				Graphics gfx = Graphics.FromImage(bmp);
-				if (tool == Tool.Select)
+				if (!selection.IsEmpty)
 				{
-					if (!selection.IsEmpty)
-					{
-						Rectangle selbnds = new Rectangle((selection.X - l) * gridsize, (selection.Y - t) * gridsize, selection.Width * gridsize, selection.Height * gridsize);
-						using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, SystemColors.Highlight)))
-							gfx.FillRectangle(brush, selbnds);
-						selbnds.Width--; selbnds.Height--;
-						using (Pen pen = new Pen(Color.FromArgb(128, Color.Black)) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dot })
-							gfx.DrawRectangle(pen, selbnds);
-					}
+					// Draw shaded rectangle
+					Rectangle selbnds = new Rectangle(selection.X * gridsize, selection.Y * gridsize, selection.Width * gridsize, selection.Height * gridsize);
+					DrawRectangle(Color.FromArgb(128, SystemColors.Highlight), selbnds);
+					// Draw dotted outline
+					selbnds.Width--; selbnds.Height--; selbnds.Y++;
+					GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);    // Draw wireframe
+					GL.LineStipple(1, 0xAAAA);                                      // Draw dotted wireframe
+					DrawRectangle(Color.FromArgb(128, Color.Black), selbnds);
+					GL.LineStipple(1, 1);                                           // Revert to default
+					GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);    // Revert to default
 				}
-				else if (!drawing)
-				{
-					if (tool == Tool.Start)
-						gfx.DrawImage(startbmps32[layout.Angle], new Rectangle((gridloc.X - l) * gridsize + 2, (gridloc.Y - t) * gridsize + 2, 24, 24), 0, 0, 24, 24, GraphicsUnit.Pixel, imageTransparency);
-					else
-					{
-						if (fgsphere != SphereType.Empty)
-							gfx.DrawImage(foreSpherePicture.Image, new Rectangle((gridloc.X - l) * gridsize + 2, (gridloc.Y - t) * gridsize + 2, 24, 24), 0, 0, 24, 24, GraphicsUnit.Pixel, imageTransparency);
-						if (fgsphere == SphereType.Yellow)
-							using (SolidBrush brush = new SolidBrush(Color.FromArgb(128, Color.Yellow)))
-							{
-								gfx.FillRectangle(brush, (gridloc.X - l) * gridsize, (layout.WrapV(gridloc.Y - 6) - t) * gridsize, gridsize, gridsize);
-								gfx.FillRectangle(brush, (layout.WrapH(gridloc.X + 6) - l) * gridsize, (gridloc.Y - t) * gridsize, gridsize, gridsize);
-								gfx.FillRectangle(brush, (gridloc.X - l) * gridsize, (layout.WrapV(gridloc.Y + 6) - t) * gridsize, gridsize, gridsize);
-								gfx.FillRectangle(brush, (layout.WrapH(gridloc.X - 6) - l) * gridsize, (gridloc.Y - t) * gridsize, gridsize, gridsize);
-							}
-					}
-				}
-				layoutgfx.DrawImage(bmp, l * gridsize, t * gridsize, bmp.Width, bmp.Height);
 			}
+			else if (!drawing)
+			{
+				if (tool == Tool.Start)
+				{
+					DrawSprite(StartTexIDs[layout.Angle], gridloc.X * gridsize + 2, gridloc.Y * gridsize + 2, 24, 24);
+				}
+				else
+				{
+					if (fgsphere != SphereType.Empty)
+					{
+						DrawSprite(SphereTexIDs[fgsphere], gridloc.X * gridsize + 2, gridloc.Y * gridsize + 2, 24, 24);
+					}
+					if (fgsphere == SphereType.Yellow)
+					{
+						Color color = Color.FromArgb(128, Color.Yellow);
+						DrawRectangle(color, new Rectangle(gridloc.X * gridsize, layout.WrapV(gridloc.Y - 6) * gridsize, gridsize, gridsize));
+						DrawRectangle(color, new Rectangle(layout.WrapH(gridloc.X + 6) * gridsize, gridloc.Y * gridsize, gridsize, gridsize));
+						DrawRectangle(color, new Rectangle(gridloc.X * gridsize, layout.WrapV(gridloc.Y + 6) * gridsize, gridsize, gridsize));
+						DrawRectangle(color, new Rectangle(layout.WrapH(gridloc.X - 6) * gridsize, gridloc.Y * gridsize, gridsize, gridsize));
+					}
+				}
+			}
+			layoutPanel.SwapBuffers();
 		}
 
 		private void DoAction(Action action)

@@ -75,7 +75,7 @@
 			this.paletteGreen = new System.Windows.Forms.PictureBox();
 			this.palettePink = new System.Windows.Forms.PictureBox();
 			this.layoutPanelContainer = new System.Windows.Forms.Panel();
-			this.layoutPanel = new System.Windows.Forms.Panel();
+			this.layoutPanel = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(), 2, 1, OpenTK.Graphics.GraphicsContextFlags.Default);
 			this.layoutSectionSplitContainer = new System.Windows.Forms.SplitContainer();
 			this.importToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.stageLayoutOptionsPanel = new System.Windows.Forms.Panel();
@@ -622,6 +622,7 @@
 			this.layoutPanel.Name = "layoutPanel";
 			this.layoutPanel.Size = new System.Drawing.Size(896, 896);
 			this.layoutPanel.TabIndex = 0;
+			this.layoutPanel.Load += new System.EventHandler(this.layoutPanel_Load);
 			this.layoutPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.layoutPanel_Paint);
 			this.layoutPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.layoutPanel_MouseDown);
 			this.layoutPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.layoutPanel_MouseMove);
@@ -977,7 +978,7 @@
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		private System.Windows.Forms.Panel layoutPanel;
+		private OpenTK.GLControl layoutPanel;
 		private System.Windows.Forms.PictureBox backSpherePicture;
 		private System.Windows.Forms.PictureBox foreSpherePicture;
 		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;

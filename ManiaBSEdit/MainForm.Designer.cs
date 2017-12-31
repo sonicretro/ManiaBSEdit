@@ -74,7 +74,7 @@
 			this.layoutSectionPreview = new System.Windows.Forms.PictureBox();
 			this.paletteGreen = new System.Windows.Forms.PictureBox();
 			this.palettePink = new System.Windows.Forms.PictureBox();
-			this.layoutPanelContainer = new System.Windows.Forms.Panel();
+			this.layoutPanelContainer = new PanelNoScrollReset();
 			this.layoutPanel = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(), 2, 1, OpenTK.Graphics.GraphicsContextFlags.Default);
 			this.layoutSectionSplitContainer = new System.Windows.Forms.SplitContainer();
 			this.importToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -1020,7 +1020,7 @@
 		private System.Windows.Forms.PictureBox palettePink;
 		private System.Windows.Forms.PropertyGrid propertyGrid1;
 		private System.Windows.Forms.ToolStripMenuItem markBlueGreenRedSpheresAsRingsToolStripMenuItem;
-		private System.Windows.Forms.Panel layoutPanelContainer;
+		private PanelNoScrollReset layoutPanelContainer;
 	}
 }
 

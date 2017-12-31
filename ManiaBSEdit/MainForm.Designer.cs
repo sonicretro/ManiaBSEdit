@@ -613,6 +613,7 @@
 			this.layoutPanelContainer.Name = "layoutPanelContainer";
 			this.layoutPanelContainer.Size = new System.Drawing.Size(324, 499);
 			this.layoutPanelContainer.TabIndex = 1;
+			this.layoutPanelContainer.Scroll += new System.Windows.Forms.ScrollEventHandler(this.layoutPanelContainer_Scroll);
 			// 
 			// layoutPanel
 			// 

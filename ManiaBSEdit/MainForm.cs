@@ -1503,6 +1503,11 @@ namespace ManiaBSEdit
 			DrawLayout();
 		}
 
+		private void layoutPanelContainer_Scroll(object sender, ScrollEventArgs e)
+		{
+			DrawLayout();
+		}
+
 		private void cutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Rectangle area = selection;
